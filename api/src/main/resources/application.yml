@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: api
+  resources:
+      addMappings: false
+  mvc:
+    favicon:
+      enabled: false
+  datasource:
+    driver-class-name: 'com.mysql.jdbc.Driver'
+    url: 'jdbc:mysql://localhost:3306/ytripapp2?useUnicode=yes'
+    username: 'ytripapp'
+    password: 'ytripapp123'
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: 'validate'
+
+server:
+  port: ${port:8181}
+
+management:
+  addApplicationContextHeader: false
+
+---
+spring.profiles: production

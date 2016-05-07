@@ -66,11 +66,11 @@ public abstract class Account implements Serializable {
     private Date dateUpdated;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateLastSignin;
+    private Date dateLastSignIn;
 
     private String password;
 
-    private String stipeCustId;
+    private String stripeCustId;
 
     private String apnsDeviceToken;
 
