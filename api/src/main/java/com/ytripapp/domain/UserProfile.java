@@ -2,7 +2,10 @@ package com.ytripapp.domain;
 
 import lombok.Data;
 
+import javax.persistence.Embeddable;
+
 @Data
+@Embeddable
 public class UserProfile {
 
     public enum Gender {
