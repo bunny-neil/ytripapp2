@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.LocaleResolver;
 
 @Profile("security")
 @EnableWebSecurity
@@ -36,6 +37,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     MessageSource messageSource;
 
+    @Autowired
+    LocaleResolver localeResolver;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(new AuthenticationService(connectionRepository))
@@ -51,6 +55,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginProcessingUrl("/sessions")
                 .successHandler(new AuthenticationSuccessHandler(messageConverter))
-                .failureHandler(new AuthenticationFailureHandler(messageConverter, messageSource));
+                .failureHandler(new AuthenticationFailureHandler());
     }
 }
