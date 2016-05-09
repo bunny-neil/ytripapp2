@@ -1,5 +1,6 @@
 package com.ytripapp.api.configuration;
 
+import com.ytripapp.api.security.AuthenticationFailureHandler;
 import com.ytripapp.api.security.AuthenticationService;
 import com.ytripapp.api.security.AuthenticationSuccessHandler;
 import com.ytripapp.repository.AccountConnectionRepository;
@@ -45,6 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
             .formLogin()
                 .loginProcessingUrl("/sessions")
-                .successHandler(new AuthenticationSuccessHandler(messageConverter));
+                .successHandler(new AuthenticationSuccessHandler(messageConverter))
+                .failureHandler(new AuthenticationFailureHandler(messageConverter));
     }
 }
