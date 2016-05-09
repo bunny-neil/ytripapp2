@@ -23,4 +23,3 @@ management:
 
 ---
 spring.profiles: production
-spring.profiles.include: security
