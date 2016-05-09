@@ -7,6 +7,7 @@ import com.ytripapp.repository.AccountConnectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
@@ -32,6 +33,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     MappingJackson2HttpMessageConverter messageConverter;
 
+    @Autowired
+    MessageSource messageSource;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(new AuthenticationService(connectionRepository))
@@ -47,6 +51,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginProcessingUrl("/sessions")
                 .successHandler(new AuthenticationSuccessHandler(messageConverter))
-                .failureHandler(new AuthenticationFailureHandler(messageConverter));
+                .failureHandler(new AuthenticationFailureHandler(messageConverter, messageSource));
     }
 }
