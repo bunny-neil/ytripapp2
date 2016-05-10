@@ -2,6 +2,7 @@ package com.ytripapp.api.configuration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.ytripapp.api.support.HttpHeaderLocaleResolver;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -15,9 +16,12 @@ import org.springframework.web.servlet.LocaleResolver;
 public class WebMvcConfiguration extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
 
     @Bean
-    MappingJackson2HttpMessageConverter messageConverter() {
+    MappingJackson2HttpMessageConverter converter() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        Hibernate5Module hibernate5Module = new Hibernate5Module();
+        hibernate5Module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
+        objectMapper.registerModule(hibernate5Module);
         Jackson2ObjectMapperBuilder.json().configure(objectMapper);
         return new MappingJackson2HttpMessageConverter(objectMapper);
     }

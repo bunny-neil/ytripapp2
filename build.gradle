@@ -42,9 +42,11 @@ configure(subprojects) { child ->
 
     ext {
         lombok_version = '1.16.8'
+        jackson_version = '2.6.5'
 
         libraries = [
-                lombok: "org.projectlombok:lombok:${lombok_version}"
+                lombok: "org.projectlombok:lombok:${lombok_version}",
+                jackson_hibernate5 : "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:${jackson_version}"
         ]
     }
 }

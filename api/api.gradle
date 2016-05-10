@@ -15,4 +15,5 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtime 'mysql:mysql-connector-java'
     compile 'org.springframework.boot:spring-boot-starter-security'
+    compile libraries.jackson_hibernate5
 }
