@@ -53,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .csrf()
                 .disable()
             .formLogin()
-                .loginProcessingUrl("/authenticate")
+                .loginProcessingUrl("/sessions")
                 .successHandler(new AuthenticationSuccessHandler(messageConverter))
                 .failureHandler(new AuthenticationFailureHandler(messageSource, localeResolver, messageConverter));
     }
