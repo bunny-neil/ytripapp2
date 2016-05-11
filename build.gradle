@@ -43,7 +43,7 @@ configure(subprojects) { child ->
     ext {
         lombok_version = '1.16.8'
         jackson_version = '2.6.5'
-        spring_session_version = '1.2.0.RC2'
+        spring_session_version = '1.2.0.RC3'
 
         libraries = [
                 lombok: "org.projectlombok:lombok:${lombok_version}",
