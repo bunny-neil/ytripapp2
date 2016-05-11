@@ -17,4 +17,6 @@ dependencies {
     runtime 'mysql:mysql-connector-java'
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile libraries.jackson_hibernate5
+    compile libraries.spring_session
+    compile libraries.spring_session_redis
 }

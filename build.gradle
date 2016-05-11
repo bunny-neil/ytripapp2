@@ -43,10 +43,13 @@ configure(subprojects) { child ->
     ext {
         lombok_version = '1.16.8'
         jackson_version = '2.6.5'
+        spring_session_version = '1.2.0.RC2'
 
         libraries = [
                 lombok: "org.projectlombok:lombok:${lombok_version}",
-                jackson_hibernate5 : "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:${jackson_version}"
+                jackson_hibernate5 : "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:${jackson_version}",
+                spring_session: "org.springframework.session:spring-session:${spring_session_version}",
+                spring_session_redis: "org.springframework.session:spring-session-data-redis:${spring_session_version}"
         ]
     }
 }

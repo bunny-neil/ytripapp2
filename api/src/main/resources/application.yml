@@ -23,4 +23,4 @@ management:
 
 ---
 spring.profiles: production
-spring.profiles.include: security
+spring.profiles.include: security,cloud-session
