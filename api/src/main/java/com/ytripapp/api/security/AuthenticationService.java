@@ -1,7 +1,6 @@
 package com.ytripapp.api.security;
 
 import com.ytripapp.domain.AccountConnection;
-import com.ytripapp.domain.AccountConnection.ConnectionType;
 import com.ytripapp.repository.AccountConnectionRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +18,7 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<AccountConnection> found = connectionRepository.findByConnectionIdAndConnectionType(username, ConnectionType.Email);
+        Optional<AccountConnection> found = connectionRepository.findByConnectionId(username);
         AccountConnection connection = found.orElseThrow(() -> new UsernameNotFoundException(""));
         return new Passport(connection);
     }

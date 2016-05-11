@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface AccountConnectionRepository extends CrudRepository<AccountConnection, Long> {
 
-    Optional<AccountConnection> findByConnectionIdAndConnectionType(String connectionId, ConnectionType connectionType);
+    Optional<AccountConnection> findByConnectionId(String connectionId);
 
 }
