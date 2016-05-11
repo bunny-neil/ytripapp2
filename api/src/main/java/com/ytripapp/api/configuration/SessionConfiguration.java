@@ -16,5 +16,5 @@ import org.springframework.session.data.redis.config.annotation.web.http.RedisHt
     RedisHttpSessionConfiguration.class
 })
 @Configuration
-public class CloudSessionConfiguration {
+public class SessionConfiguration {
 }
