@@ -2,8 +2,11 @@ package com.ytripapp.domain;
 
 import com.ytripapp.domain.AccountConnection.ConnectionType;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class NativeConnectionProvider implements ConnectionProvider {
 
     private String nickname;

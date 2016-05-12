@@ -1,7 +1,6 @@
-package com.ytripapp.api.configuration;
+package com.ytripapp.repository;
 
 import com.ytripapp.domain.AccountConnection;
-import com.ytripapp.repository.AccountConnectionRepository;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.orm.jpa.EntityScan;
@@ -13,5 +12,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackageClasses = AccountConnection.class)
 @EnableJpaRepositories(basePackageClasses = AccountConnectionRepository.class)
 @Import({DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-public class RepositoryConfiguration {
+public class RepositoryAutoConfiguration {
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: api
+    name: gateway
   resources:
       addMappings: false
   mvc:
@@ -16,7 +16,7 @@ spring:
     hibernate.ddl-auto: 'validate'
 
 server:
-  port: ${port:8181}
+  port: ${port:8080}
 
 management:
   addApplicationContextHeader: false

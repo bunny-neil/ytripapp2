@@ -2,7 +2,6 @@ package com.ytripapp.domain;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import java.io.Serializable;
 
 @Entity
 @DiscriminatorValue("Guest")

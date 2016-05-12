@@ -17,14 +17,14 @@ import org.springframework.session.data.redis.config.annotation.web.http.RedisHt
     RedisAutoConfiguration.class,
     RedisHttpSessionConfiguration.class
 })
-public class ApiApplication extends SpringBootServletInitializer {
+public class GatewayApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(ApiApplication.class);
+        return application.sources(GatewayApplication.class);
     }
 
     public static void main(String...args) {
-        SpringApplication.run(ApiApplication.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 }

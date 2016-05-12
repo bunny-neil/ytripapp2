@@ -1,6 +1,8 @@
 package com.ytripapp.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -8,7 +10,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @Embeddable
 public class UserProfile implements Serializable {
 
