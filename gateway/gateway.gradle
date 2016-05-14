@@ -17,4 +17,5 @@ dependencies {
     compile libraries.jackson_hibernate5
     compile libraries.spring_session
     compile libraries.spring_session_redis
+    compile 'org.springframework.security.oauth:spring-security-oauth2'
 }
