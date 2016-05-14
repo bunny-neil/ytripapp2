@@ -1,11 +1,11 @@
 wechat:
   client:
-    clientId: 233668646673605
-    clientSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
-    accessTokenUri: https://graph.facebook.com/oauth/access_token
-    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+    clientId: wxfb72a080bd030afc
+    clientSecret: 904b37a6a9fda7b7da951425a8644e3b
+    accessTokenUri: https://api.weixin.qq.com/sns/oauth2/access_token
+    userAuthorizationUri: https://open.weixin.qq.com/connect/qrconnect
     tokenName: oauth_token
     authenticationScheme: query
     clientAuthenticationScheme: form
   resource:
-    userInfoUri: https://graph.facebook.com/me
+    userInfoUri: https://api.weixin.qq.com/sns/userinfo
