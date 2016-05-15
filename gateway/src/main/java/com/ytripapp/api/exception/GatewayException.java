@@ -7,14 +7,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties({"stackTrace", "message", "cause", "localizedMessage", "suppressed"})
-public class ApiException extends RuntimeException {
+public class GatewayException extends RuntimeException {
 
     private static final long serialVersionUID = 1777572669985557247L;
 
     private String code;
     private String details;
 
-    public ApiException(String code) {
+    public GatewayException(String code) {
         this.code = code;
     }
 }
