@@ -3,10 +3,12 @@ package com.ytripapp.api.configuration;
 import com.ytripapp.api.security.AuthenticationFailureHandler;
 import com.ytripapp.api.security.AuthenticationService;
 import com.ytripapp.api.security.AuthenticationSuccessHandler;
+import com.ytripapp.api.security.WechatAccessTokenProvider;
 import com.ytripapp.repository.AccountConnectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
@@ -60,25 +62,37 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     OAuth2ClientContext oauth2ClientContext;
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(new AuthenticationService(connectionRepository))
+            .passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic().disable()
+            .csrf().disable()
+            .formLogin()
+                .loginProcessingUrl("/sessions")
+                .successHandler(new AuthenticationSuccessHandler(messageConverter))
+                .failureHandler(new AuthenticationFailureHandler(messageSource, localeResolver, messageConverter))
+            .and()
+                .addFilterBefore(wechatOAuth2ProcessingFilter(), BasicAuthenticationFilter.class)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+    }
+
     @Bean
     public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(filter);
-        registration.setOrder(-100);
+        registration.setOrder(SecurityProperties.DEFAULT_FILTER_ORDER - 1);
         return registration;
-    }
-
-    private Filter ssoFilter() {
-        OAuth2ClientAuthenticationProcessingFilter wechatFilter = new OAuth2ClientAuthenticationProcessingFilter("/connections/wechat");
-        OAuth2RestTemplate wechatTemplate = new OAuth2RestTemplate(wechat(), oauth2ClientContext);
-        wechatFilter.setRestTemplate(wechatTemplate);
-        wechatFilter.setTokenServices(new UserInfoTokenServices(wechatResource().getUserInfoUri(), wechat().getClientId()));
-        return wechatFilter;
     }
 
     @Bean
     @ConfigurationProperties("wechat.client")
-    OAuth2ProtectedResourceDetails wechat() {
+    OAuth2ProtectedResourceDetails wechatClient() {
         return new AuthorizationCodeResourceDetails();
     }
 
@@ -88,25 +102,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new ResourceServerProperties();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(new AuthenticationService(connectionRepository))
-            .passwordEncoder(new BCryptPasswordEncoder());
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic()
-            .disable()
-            .csrf()
-            .disable()
-            .formLogin()
-            .loginProcessingUrl("/sessions")
-            .successHandler(new AuthenticationSuccessHandler(messageConverter))
-            .failureHandler(new AuthenticationFailureHandler(messageSource, localeResolver, messageConverter))
-            .and()
-            .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+    private Filter wechatOAuth2ProcessingFilter() {
+        OAuth2ClientAuthenticationProcessingFilter wechatFilter = new OAuth2ClientAuthenticationProcessingFilter("/connections/wechat");
+        OAuth2RestTemplate wechatTemplate = new OAuth2RestTemplate(wechatClient(), oauth2ClientContext);
+        wechatTemplate.setAccessTokenProvider(new WechatAccessTokenProvider());
+        wechatFilter.setRestTemplate(wechatTemplate);
+        wechatFilter.setTokenServices(new UserInfoTokenServices(wechatResource().getUserInfoUri(), wechatClient().getClientId()));
+        return wechatFilter;
     }
 }
